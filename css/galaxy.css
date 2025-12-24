@@ -1,0 +1,14 @@
+body{
+    margin:0;
+    overflow:hidden;
+    background:black;
+}
+
+#close{
+    position:fixed;
+    top:10px;
+    left:10px;
+    z-index:10;
+    padding:10px;
+    border-radius:10px;
+}
