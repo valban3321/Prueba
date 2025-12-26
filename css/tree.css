@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffb6c1 0%, #ffc0cb 40%, #ff9eb5 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  color: #5a0033;
+  padding: 20px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* ===== PARTÍCULAS ===== */
+.particles span {
+  position: absolute;
+  font-size: 20px;
+  animation: float 12s linear infinite;
+  opacity: .6;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(110vh) scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(-10vh) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* ===== TEXTO ===== */
+h2 {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.6rem;
+  margin-bottom: 12px;
+}
+
+#timer {
+  background: rgba(255,255,255,.65);
+  padding: 14px 22px;
+  border-radius: 18px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.15);
+  z-index: 2;
+}
+
+/* ===== CORAZÓN GRANDE ===== */
+#heart-container {
+  position: relative;
+  width: 300px;
+  height: 260px;
+  margin-bottom: 40px;
+  z-index: 2;
+}
+
+.heart-pixel {
+  position: absolute;
+  font-size: 18px;
+  animation: pop .4s ease-out;
+}
+
+@keyframes pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ===== BOTÓN ===== */
+button {
+  background: linear-gradient(135deg, #ff4f9a, #ff005d);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255, 0, 100, 0.4);
+  animation: pulse 2s infinite;
+  z-index: 2;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

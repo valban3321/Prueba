@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piénsalo bien 💭</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffb6c1,#ffc3a0,#ffdde1,#ffd6e8);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+}
+
+/* =====================
+   FONDOS DECORATIVOS
+===================== */
+.hearts,
+.sparkles,
+.bubbles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1;
+}
+
+/* Corazones */
+.hearts span{
+    position:absolute;
+    bottom:-10%;
+    font-size:22px;
+    animation:float 10s linear infinite;
+    opacity:.45;
+}
+
+/* Destellos */
+.sparkles span{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    opacity:.5;
+    animation:twinkle 6s infinite ease-in-out;
+}
+
+/* Burbujas */
+.bubbles span{
+    position:absolute;
+    bottom:-15%;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:rgba(255,255,255,.25);
+    animation:bubble 14s linear infinite;
+}
+
+@keyframes float{
+    from{transform:translateY(0) rotate(0deg);}
+    to{transform:translateY(-120vh) rotate(360deg);}
+}
+
+@keyframes twinkle{
+    0%,100%{opacity:.2; transform:scale(.5);}
+    50%{opacity:.8; transform:scale(1.2);}
+}
+
+@keyframes bubble{
+    from{transform:translateY(0) scale(.8);}
+    to{transform:translateY(-130vh) scale(1.2);}
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* =====================
+   TARJETA
+===================== */
+#slide{
+    background:rgba(255,255,255,0.94);
+    width:90%;
+    max-width:420px;
+    padding:32px 26px;
+    border-radius:26px;
+    text-align:center;
+    box-shadow:0 30px 60px rgba(0,0,0,.25);
+    z-index:2;
+    animation:fade .6s ease;
+}
+
+h2{
+    margin:0 0 10px;
+    font-weight:600;
+}
+
+p{
+    margin:0 0 18px;
+    font-size:.95rem;
+}
+
+img{
+    width:100%;
+    max-width:260px;
+    height:auto;
+    border-radius:18px;
+    margin:15px auto;
+    display:block;
+}
+
+button{
+    margin-top:16px;
+    padding:12px 30px;
+    font-size:1rem;
+    border:none;
+    border-radius:30px;
+    background:#ff4d6d;
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(255,77,109,.45);
+}
+
+button:hover{
+    transform:scale(1.08);
+    background:#ff1e56;
+}
+
+@keyframes fade{
+    from{opacity:0; transform:scale(.95);}
+    to{opacity:1; transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Música -->
+<audio id="bgMusic" autoplay loop>
+    <source src="assets/rechazo.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 💕 Corazones -->
+<div class="hearts">
+    <span style="left:10%;animation-delay:0s">💖</span>
+    <span style="left:25%;animation-delay:2s">💗</span>
+    <span style="left:40%;animation-delay:4s">💕</span>
+    <span style="left:60%;animation-delay:1s">💞</span>
+    <span style="left:75%;animation-delay:3s">💓</span>
+    <span style="left:90%;animation-delay:5s">💘</span>
+</div>
+
+<!-- ✨ Destellos -->
+<div class="sparkles">
+    <span style="top:20%;left:15%"></span>
+    <span style="top:40%;left:70%"></span>
+    <span style="top:65%;left:30%"></span>
+    <span style="top:10%;left:80%"></span>
+</div>
+
+<!-- 🌸 Burbujas -->
+<div class="bubbles">
+    <span style="left:20%;animation-delay:0s"></span>
+    <span style="left:45%;animation-delay:4s"></span>
+    <span style="left:70%;animation-delay:2s"></span>
+</div>
+
+<div id="slide"></div>
+
+<script>
+
+let musicTimeout = null;
+
+const slides = [
+    {
+        title:"Razones por las cuales me gustas💕",
+        text:"Y deberías de ser mi novia",
+        img:"assets/meme1.png"
+    },
+    {
+        title:"Razón #1 💕",
+        text:"Me gustas, te gusto y nos gustamos",
+        img:"assets/meme2.png"
+    },
+    {
+        title:"Razón #2 😌",
+        text:"Traemos buen cotorreo entre los 2, no hay momentos incómodos",
+        img:"assets/meme3.png"
+    },
+    {
+        title:"Razón #3 🫶",
+        text:"Compartimos la misma neurona y los mismos traumas",
+        img:"assets/meme4.png"
+    },
+    {
+        title:"Razón #4 🫶",
+        text:"Soy un hombre que resuelve",
+        img:"assets/meme5.png"
+    },
+    {
+        title:"Razón #5 🫶",
+        text:"Ya me acostumbré mucho a ti como para que no aceptes",
+        img:"assets/meme6.png"
+    },
+    {
+        title:"Razón #6 🫶",
+        text:"Quiero ver cómo cumples tus metas y compartir contigo lo bueno y lo malo",
+        img:"assets/meme7.png"
+    },
+    {
+        title:"Razón #7 🫶",
+        text:"Me gustas un chingo, físicamente y por tu forma de ser",
+        img:"assets/meme8.gif"
+    },
+    {
+        title:"Razón #8 🫶",
+        text:"VAMOS A DERROCAR AL SISTEMA JUNTOS (Webos claudia sheinbaum)",
+        img:"assets/memewebos.png"
+    },
+    {
+        title:"Razón #9 🫶",
+        text:"Le pongo un chingo de empeño en salir adelante, asi que te convengo ya que te puedo mantener en un futuro no muy lejano",
+        img:"assets/meme9.png"
+    },
+    {
+        title:"Razón #10 🫶",
+        text:"Poco a poco sacas la mejor versión de mí",
+        img:"assets/meme10.png"
+    },
+    {
+        title:"Pido perdón",
+        text:"Incluí lo siguiente xd",
+        img:"assets/meme13.png"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"DIEGO RIVERA!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"DIEGO RIVERA!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"DIEGO RIVERA!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"DIEGO RIVERA!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"DIEGO RIVERA!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"DIEGO RIVERA!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"DIEGO RIVERA!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Razón extra 🫶",
+        text:"Y FRIDA KAHLO!!!",
+        img:"assets/memed.gif"
+    },
+    {
+        title:"Perdoname, lo tenia que hacer jajaja",
+        text:"Ahora si, vamos con la última",
+        img:"assets/meme11.gif"
+    },
+    {
+        title:"Última razón ❤️",
+        text:"Porque eres una chica que me a demostrado que vale el esfuerzo, te lo he dicho antes pero en de verdad y en serio, eres una de las mejores porsonas que he conocido, eres trabajadora, amable inteligente, y en lo personal me gustaria contruir un futuro a tu lado, que si, seguro habrá obstaculos, y muy probablemente tendremos discusiones o conflictos, pero quisiera poder resolver a tu lado, seamos equipo, para hacer frente a la vida",
+        img:"assets/meme12.png",
+        end:true
+    }
+];
+
+let index = 0;
+const slide = document.getElementById("slide");
+const music = document.getElementById("bgMusic");
+
+function renderSlide(){
+    const s = slides[index];
+    const music = document.getElementById("bgMusic");
+
+    slide.innerHTML = `
+        <h2>${s.title}</h2>
+        <p>${s.text}</p>
+        <img src="${s.img}" alt="meme">
+        <button onclick="nextSlide()">
+            ${s.end ? "Si esto no es suficiente para convencerte 🌌" : "Siguiente 👉"}
+        </button>
+    `;
+
+    // limpiar cualquier delay anterior
+    if (musicTimeout) {
+        clearTimeout(musicTimeout);
+        musicTimeout = null;
+    }
+
+    // 🎵 SLIDES DIEGO / FRIDA
+    if (
+        s.text === "Incluí lo siguiente xd" ||
+        s.text === "Y FRIDA KAHLO!!!"
+    ) {
+        if (!music.src.includes("diego.mp3")) {
+            music.pause();
+            music.src = "assets/diego.mp3";
+            music.loop = true;
+
+            musicTimeout = setTimeout(() => {
+                music.play();
+            }, 15000);
+        }
+        return;
+    }
+
+    // 🎶 SLIDES FINALES
+    if (
+        s.title === "Perdoname, lo tenia que hacer jajaja" ||
+        s.title === "Última razón ❤️"
+    ) {
+        if (!music.src.includes("final.mp3")) {
+            music.pause();
+            music.src = "assets/final.mp3";
+            music.loop = true;
+
+            musicTimeout = setTimeout(() => {
+                music.play();
+            }, 10000);
+        }
+        return;
+    }
+}
+
+
+
+function nextSlide(){
+    if(slides[index].end){
+        window.location.href = "galaxyrechazado.html";
+    } else {
+        index++;
+        renderSlide();
+    }
+}
+
+/* Música sin espera */
+music.play().catch(()=>{});
+document.body.addEventListener('click',()=>{
+    music.play();
+},{ once:true });
+
+renderSlide();
+</script>
+
+</body>
+</html>
