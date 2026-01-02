@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Órbita</title>
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  font-family:'Segoe UI',system-ui;
+  overflow:hidden;
+}
+
+/* 🌌 FONDO */
+body{
+  background-image:url("https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+/* OSCURECER */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(5,8,20,.78);
+  z-index:0;
+}
+
+/* ✨ ESTRELLAS */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:1;
+}
+
+/* CONTENIDO */
+.container{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  padding:40px;
+}
+
+.content{
+  max-width:750px;
+  animation:fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:none;}
+}
+
+.line{
+  font-size:1.6rem;
+  margin:18px 0;
+  opacity:0;
+  animation:appear 1.5s ease forwards;
+}
+
+.line:nth-child(1){animation-delay:.5s}
+.line:nth-child(2){animation-delay:2s}
+.line:nth-child(3){animation-delay:3.5s}
+.line:nth-child(4){animation-delay:5s}
+.line:nth-child(5){animation-delay:6.8s}
+
+@keyframes appear{to{opacity:1}}
+
+.buttons{
+  margin-top:60px;
+  display:flex;
+  gap:30px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+button{
+  padding:14px 32px;
+  border-radius:30px;
+  font-size:1rem;
+  cursor:pointer;
+  border:none;
+  transition:.3s;
+}
+
+.primary{
+  background:linear-gradient(135deg,#7b5cff,#ff5db1);
+  color:#fff;
+  box-shadow:0 0 25px rgba(255,100,200,.5);
+}
+
+.primary:hover{transform:scale(1.05)}
+
+.secondary{
+  background:transparent;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.4);
+}
+
+.secondary:hover{background:rgba(255,255,255,.1)}
+
+.final,.accepted{
+  display:none;
+  font-size:1.6rem;
+  max-width:700px;
+  line-height:1.6;
+  animation:fadeIn 2s ease forwards;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+<canvas id="stars"></canvas>
+
+<!-- 🎵 MÚSICA -->
+<audio id="music" loop>
+  <source src="assets/No surprises.flac" type="audio/mpeg">
+</audio>
+
+
+<div class="container">
+  <div class="content" id="content">
+    <div class="line">Si llegaste a este punto es porque lo pensaste y aún no te sientes segura.</div>
+    <div class="line">No quiero que esto suene insistente…</div>
+    <div class="line">ni que se sienta como presión.</div>
+    <div class="line">Este será mi último "empujoncito"</div>
+    <div class="line">Así que pregunto de nuevo, con calma.</div>
+    <div class="line"><strong>¿Te gustaría ser mi novia?</strong></div>
+
+    <div class="buttons">
+      <button class="primary" onclick="accept()">Sí, sigamos</button>
+      <button class="secondary" onclick="endHere()">No me siento lista...</button>
+    </div>
+  </div>
+
+  <div class="accepted" id="accepted">
+    Se que esto no será perfecto, pero trabajaremos juntos para hacerlo hermoso.<br><br>
+    Gracias por elegir quedarte,<br>
+    por decir que sí,<br>
+    y por permitirnos intentar algo real. 💫
+  </div>
+
+  <div class="final" id="final">
+    Gracias por llegar hasta aquí.<br><br>
+    En el fondo, algo me decia que esta sería tu decisión<br>
+    Tal vez... 
+    <br>Aún no era el momento.<br>
+  </div>
+</div>
+
+<script>
+/* =====================
+   MÚSICA AUTOMÁTICA
+===================== */
+const music = document.getElementById("music");
+music.volume = 0.6;
+
+function startMusic(){
+  music.play().catch(()=>{});
+}
+window.addEventListener("load", startMusic);
+document.body.addEventListener("click", startMusic, { once:true });
+
+/* ⭐ ESTRELLAS */
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+}
+resize();
+addEventListener("resize",resize);
+
+const stars=[];
+for(let i=0;i<150;i++){
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*1.8,
+    v:Math.random()*0.4+.2
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  stars.forEach(s=>{
+    s.y+=s.v;
+    if(s.y>canvas.height)s.y=0;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* BOTONES */
+function accept(){
+  document.getElementById("content").style.display="none";
+  document.getElementById("accepted").style.display="block";
+}
+
+function endHere(){
+  document.getElementById("content").style.display="none";
+  document.getElementById("final").style.display="block";
+}
+</script>
+
+</body>
+</html>
